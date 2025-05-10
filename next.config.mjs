@@ -1,8 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    experimental: {
-        
-      }
+    async rewrites(){
+      return[
+        {source:"/api/:path*",destination:"/api/:path*"}
+      ];
+    }
     
 
 };
