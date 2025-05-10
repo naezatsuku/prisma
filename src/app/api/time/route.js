@@ -14,7 +14,7 @@ export async function POST(req) {
        });
        
     }
-    return NextResponse.json(datas);
+    return NextResponse.json({message:"成功しました",data:datas});
     }catch(error){
         return NextResponse.json(({message:"失敗しました"}))
     }
