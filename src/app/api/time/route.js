@@ -5,19 +5,23 @@ const prisma = new PrismaClient();
 export async function POST(req) {
     try{
         const datas = await req.json();
-    console.log(datas);
-    for(let i=0;i<datas.length;i++ ){
-       const data = datas[i];
-       const {className , time } = data 
-       await prisma.outline.create({
-        data:{className:className,time:time}
-       });
-       
-    }
-    return NextResponse.json({message:"成功しました",data:datas});
-    }catch(error){
-        return NextResponse.json(({message:"失敗しました"}))
-    }
+        console.log(datas)
+        const postToDatabase = datas.map(data =>{
+            const {className,time} = data;
+            console.log(data);
+            return prisma.Outline.create(
+                {
+                    data : {className,time}
+                }
+            )
+        })
+       const insertedData = await Promise.all(postToDatabase);
+    console.log(insertedData);
+    return NextResponse.json({message:"成功しました",data:insertedData});
+    }catch(error) {
+    console.error("Error during insertion:", error);
+    return NextResponse.json({ message: "失敗しました", error: error.message });
+}
     
     
 }

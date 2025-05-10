@@ -16,5 +16,6 @@ datasource db {
 model Outline {
   id    Int    @id @default(autoincrement())
   className  String
-  time String
+  time Int
+  @@map("Outline")
 }
